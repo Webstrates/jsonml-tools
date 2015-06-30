@@ -19,58 +19,58 @@ var assert = require("assert");
 /*
 TESTLIST
 
- + ["foo"] should return <foo></foo>
- + ["foo", ["bar"]] should return <foo><bar></bar></foo>
- + ["foo", "bar", ["baz"]] should return <foo>bar<baz></baz>
- + ["foo", {"bar": "baz"}] should return <foo bar="baz"></foo>
- + ["foo", ["bar", ["baz"]]] should return <foo><bar><baz></baz></bar></foo>
+ + ["foo"] should return <foo/>
+ + ["foo", ["bar"]] should return <foo><bar/></foo>
+ + ["foo", "bar", ["baz"]] should return <foo>bar<baz/></foo>
+ + ["foo", {"bar": "baz"}] should return <foo bar="baz"/>
+ + ["foo", ["bar", ["baz"]]] should return <foo><bar><baz/></bar></foo>
  + [{}] should throw an error
  + ["foo", ["bar", [{}]]] should throw an error
  + ["foo", "bar", {}] should throw an error
  + "foo" should return "foo"
- + ["foo", {bar: true}] should return <foo bar="true"></foo>
- + ["foo", ["bar"], ["baz"]] should return <foo><bar></bar><baz></baz></foo>
- + ["foo", {hello: "world"}, ["bar"], ["baz"]] should return <foo hello="world"><bar></bar><baz></baz></foo>
+ + ["foo", {bar: true}] should return <foo bar="true"/>
+ + ["foo", ["bar"], ["baz"]] should return <foo><bar/><baz/></foo>
+ + ["foo", {hello: "world"}, ["bar"], ["baz"]] should return <foo hello="world"><bar/><baz/></foo>
  
 */
 
 describe("JsonML", function() {
    describe("#toXML()", function() {
        
-       it('should return <foo></foo> on ["foo"]', function() {
-           assert.equal("<foo></foo>", jsonml.toXML(['foo']));
+       it('should return <foo><foo/> on ["foo"]', function() {
+           assert.equal("<foo/>", jsonml.toXML(['foo']));
        });
        
-       it('should return <foo><bar></bar></foo> on ["foo", ["bar"]]', function() {
-           assert.equal("<foo><bar></bar></foo>", jsonml.toXML(["foo", ["bar"]])); 
+       it('should return <foo><bar/></foo> on ["foo", ["bar"]]', function() {
+           assert.equal("<foo><bar/></foo>", jsonml.toXML(["foo", ["bar"]])); 
        });
        
-       it('should return <foo><bar><baz></baz></bar></foo> on ["foo", ["bar", ["baz"]]]', function() {
-           assert.equal("<foo><bar><baz></baz></bar></foo>", jsonml.toXML(["foo", ["bar", ["baz"]]])); 
+       it('should return <foo><bar><baz/></bar></foo> on ["foo", ["bar", ["baz"]]]', function() {
+           assert.equal("<foo><bar><baz/></bar></foo>", jsonml.toXML(["foo", ["bar", ["baz"]]])); 
        });
        
-       it('should return <foo>bar<baz></baz> on ["foo", "bar", ["baz"]]', function() {
-           assert.equal("<foo>bar<baz></baz></foo>", jsonml.toXML(["foo", "bar", ["baz"]]));
+       it('should return <foo>bar<baz/></foo> on ["foo", "bar", ["baz"]]', function() {
+           assert.equal("<foo>bar<baz/></foo>", jsonml.toXML(["foo", "bar", ["baz"]]));
        });
        
-       it('should return <foo bar="baz"></foo> on ["foo", {"bar": "baz"}]', function() {
-           assert.equal('<foo bar="baz"></foo>', jsonml.toXML(["foo", {"bar": "baz"}]));
+       it('should return <foo bar="baz"/> on ["foo", {"bar": "baz"}]', function() {
+           assert.equal('<foo bar="baz"/>', jsonml.toXML(["foo", {"bar": "baz"}]));
        });
        
        it('should return "foo on ["foo"]"', function() {
            assert.equal('foo', jsonml.toXML("foo"));
        });
        
-       it('should return <foo bar="true"></foo> on ["foo", {bar: true}]', function() {
-           assert.equal('<foo bar="true"></foo>', jsonml.toXML(["foo", {bar: true}])) ;
+       it('should return <foo bar="true"/> on ["foo", {bar: true}]', function() {
+           assert.equal('<foo bar="true"/>', jsonml.toXML(["foo", {bar: true}])) ;
        });
        
-       it('should return <foo><bar></bar><baz></baz></foo> on ["foo", ["bar"], ["baz"]]', function() {
-           assert.equal('<foo><bar></bar><baz></baz></foo>', jsonml.toXML(["foo", ["bar"], ["baz"]]));
+       it('should return <foo><bar/><baz/></foo> on ["foo", ["bar"], ["baz"]]', function() {
+           assert.equal('<foo><bar/><baz/></foo>', jsonml.toXML(["foo", ["bar"], ["baz"]]));
        });
        
-       it('should return <foo hello="world"><bar></bar><baz></baz></foo> on ["foo", {hello: "world"} ["bar"], ["baz"]]', function() {
-           assert.equal('<foo hello="world"><bar></bar><baz></baz></foo>', jsonml.toXML(["foo", {hello: "world"}, ["bar"], ["baz"]]));
+       it('should return <foo hello="world"><bar/><baz/></foo> on ["foo", {hello: "world"} ["bar"], ["baz"]]', function() {
+           assert.equal('<foo hello="world"><bar/><baz/></foo>', jsonml.toXML(["foo", {hello: "world"}, ["bar"], ["baz"]]));
        });
        
        it('should throw an error on [{}]', function() {
