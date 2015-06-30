@@ -9,3 +9,8 @@ Usage
 
 	var jsonml = require("jsonml-tools");
 	var xml = jsonml.toXML(["foo", ["bar", "baz"]]);
+	
+License
+=======
+
+This work is licenced under the [Apache License, Version 2.0](http://www.apache.org/licenses/LICENSE-2.0)
