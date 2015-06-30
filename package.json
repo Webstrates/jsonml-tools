@@ -3,6 +3,10 @@
   "version": "0.0.1",
   "description": "A simple JsonML library for node.js",
   "main": "index.js",
+  "repository" : {   
+      "type" : "git", 
+      "url" : "https://github.com/cklokmose/jsonml-tools"
+  },
   "scripts": {
     "test": "mocha"
   },
