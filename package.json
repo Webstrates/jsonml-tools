@@ -1,0 +1,14 @@
+{
+  "name": "jsonml-tools",
+  "version": "0.0.1",
+  "description": "A simple JsonML library for node.js",
+  "main": "index.js",
+  "scripts": {
+    "test": "mocha"
+  },
+  "keywords": [
+    "JsonML"
+  ],
+  "author": "Clemens Nylandsted Klokmose",
+  "license": "Apache-2.0"
+}
