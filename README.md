@@ -10,6 +10,11 @@ Usage
 	var jsonml = require("jsonml-tools");
 	var xml = jsonml.toXML(["foo", ["bar", "baz"]]);
 	
+Per default jsonml-tools autocloses tags (i.e. <br/>).
+Add a list of tags to selfclose to toXML to whitelist tags for selfclose. Add an empty list to disable selfclose.
+
+	var xml = jsonml.toXML(["foo", ["bar"], ["baz"]], ["bar"]); //Results in <foo><bar/><baz></baz></foo>
+	
 License
 =======
 

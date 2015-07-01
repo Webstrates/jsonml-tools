@@ -31,7 +31,11 @@ TESTLIST
  + ["foo", {bar: true}] should return <foo bar="true"/>
  + ["foo", ["bar"], ["baz"]] should return <foo><bar/><baz/></foo>
  + ["foo", {hello: "world"}, ["bar"], ["baz"]] should return <foo hello="world"><bar/><baz/></foo>
- x ["!", "This is a comment"] should return <!--This is a comment-->
+ + ["!", "This is a comment"] should return <!--This is a comment-->
+ + ["br"] with selfclose=["br"] should return <br/>
+ + ["foo"] with selfclose=["br"] should return <foo></foo>
+ + ["foo"] with selfclose=[] should return <foo></foo>
+ - ["foo", ["bar"], ["baz"]] with selfclose=["bar"] should return <foo><bar/><baz></baz></foo>
  
 */
 
@@ -88,6 +92,22 @@ describe("JsonML", function() {
        
        it('should return <!--This is a comment--> on ["!", "This is a comment"]', function() {
            assert.equal("<!--This is a comment-->", jsonml.toXML(["!", "This is a comment"]));
+       });
+       
+       it('should return <foo></foo> on ["foo"] with selfclose=["br"]', function() {
+           assert.equal("<foo></foo>", jsonml.toXML(["foo"], ["br"]));
+       });
+       
+       it('should return <br/> on ["br"] with selfclose=["br"]', function() {
+           assert.equal("<br/>", jsonml.toXML(["br"], ["br"]));
+       });
+       
+       it('should return <foo></foo> on ["foo"] with selfclose=[]', function() {
+           assert.equal("<foo></foo>", jsonml.toXML(["foo"], []));
+       });
+       
+       it('should return <foo><bar/><baz></baz></foo> on ["foo", ["bar"], ["baz"]] with selfclose=["bar"]', function() {
+           assert.equal("<foo><bar/><baz></baz></foo>", jsonml.toXML(["foo", ["bar"], ["baz"]], ["bar"]));
        });
        
    }); 

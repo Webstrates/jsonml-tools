@@ -13,7 +13,7 @@
    limitations under the License.
 */
        
-exports.toXML = function(obj) {
+exports.toXML = function(obj, selfclose) {
     if (typeof obj === 'string') return obj;
     var tagName = obj[0];
     if (typeof tagName !== 'string') throw Error("Invalid JsonML");
@@ -35,9 +35,12 @@ exports.toXML = function(obj) {
     var children = obj.slice(childIndex, obj.length);
     var childXML = ""
     for (var i = 0; i<children.length; i++) {
-        childXML += this.toXML(children[i]);
+        childXML += this.toXML(children[i], selfclose);
     }
-    if (childXML.length > 0) return "<" + tagName + attrStr + ">" + childXML + "</" + tagName + ">";
-    return "<" + tagName + attrStr + "/>"
+    if (children.length === 0 && (selfclose === undefined || selfclose.indexOf(tagName) !== -1)) {
+        return "<" + tagName + attrStr + "/>"
+    }
+    return "<" + tagName + attrStr + ">" + childXML + "</" + tagName + ">";
+    
 
 }
