@@ -35,7 +35,8 @@ TESTLIST
  + ["br"] with selfclose=["br"] should return <br/>
  + ["foo"] with selfclose=["br"] should return <foo></foo>
  + ["foo"] with selfclose=[] should return <foo></foo>
- - ["foo", ["bar"], ["baz"]] with selfclose=["bar"] should return <foo><bar/><baz></baz></foo>
+ + ["foo", ["bar"], ["baz"]] with selfclose=["bar"] should return <foo><bar/><baz></baz></foo>
+ - ["BR"] with selfclose=["br"] should return <BR/>
  
 */
 
@@ -108,6 +109,10 @@ describe("JsonML", function() {
        
        it('should return <foo><bar/><baz></baz></foo> on ["foo", ["bar"], ["baz"]] with selfclose=["bar"]', function() {
            assert.equal("<foo><bar/><baz></baz></foo>", jsonml.toXML(["foo", ["bar"], ["baz"]], ["bar"]));
+       });
+       
+       it('should return <BR/> on ["BR"] with selfclose=["br"]', function() {
+           assert.equal("<BR/>", jsonml.toXML(["BR"], ["br"]));
        });
        
    }); 

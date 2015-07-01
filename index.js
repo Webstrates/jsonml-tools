@@ -37,7 +37,7 @@ exports.toXML = function(obj, selfclose) {
     for (var i = 0; i<children.length; i++) {
         childXML += this.toXML(children[i], selfclose);
     }
-    if (children.length === 0 && (selfclose === undefined || selfclose.indexOf(tagName) !== -1)) {
+    if (children.length === 0 && (selfclose === undefined || selfclose.map(function (x) {return x.toLowerCase()}).indexOf(tagName.toLowerCase()) !== -1)) {
         return "<" + tagName + attrStr + "/>"
     }
     return "<" + tagName + attrStr + ">" + childXML + "</" + tagName + ">";
