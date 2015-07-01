@@ -31,7 +31,7 @@ TESTLIST
  + ["foo", {bar: true}] should return <foo bar="true"/>
  + ["foo", ["bar"], ["baz"]] should return <foo><bar/><baz/></foo>
  + ["foo", {hello: "world"}, ["bar"], ["baz"]] should return <foo hello="world"><bar/><baz/></foo>
- x ["!", "This is a comment"] should return <!-- This is a comment -->
+ x ["!", "This is a comment"] should return <!--This is a comment-->
  
 */
 
@@ -86,8 +86,8 @@ describe("JsonML", function() {
            assert.throws( function() { jsonml.toXML(["foo", "bar", {}]) }, Error, "Invalid JsonML");
        });
        
-       it('should return <!-- This is a comment --> on ["!", "This is a comment"]', function() {
-           assert.equal("<!-- This is a comment -->", jsonml.toXML(["!", "This is a comment"]));
+       it('should return <!--This is a comment--> on ["!", "This is a comment"]', function() {
+           assert.equal("<!--This is a comment-->", jsonml.toXML(["!", "This is a comment"]));
        });
        
    }); 
