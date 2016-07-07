@@ -17,7 +17,11 @@ exports.toXML = function(obj, selfclose) {
     if (typeof obj === 'string') return obj;
     var tagName = obj[0];
     if (typeof tagName !== 'string') throw Error("Invalid JsonML");
-    if (tagName === "!") return "<!--" + obj[1] + "-->";
+    if (tagName === "!" || tagName === "#comment") {
+      var textOffset = typeof obj[1] === "object" ? 2 : 1;
+      var text = obj.slice(textOffset).join('');
+      return "<!--" + text + "-->";
+    }
     var attrStr = "";
     var childIndex = 1;
     if (obj.length > 1 && typeof obj[1] !== 'string' && !Array.isArray(obj[1])) {

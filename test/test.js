@@ -95,6 +95,14 @@ describe("JsonML", function() {
            assert.equal("<!--This is a comment-->", jsonml.toXML(["!", "This is a comment"]));
        });
        
+       it('should return <!--This is a comment--> on ["!", "This is ", "a", " comment"]', function() {
+           assert.equal("<!--This is a comment-->", jsonml.toXML(["!", "This is ", "a", " comment"]));
+       });
+       
+       it('should return <!--This is a comment--> on ["#comment", "This is a comment"]', function() {
+           assert.equal("<!--This is a comment-->", jsonml.toXML(["#comment", "This is a comment"]));
+       });
+       
        it('should return <foo></foo> on ["foo"] with selfclose=["br"]', function() {
            assert.equal("<foo></foo>", jsonml.toXML(["foo"], ["br"]));
        });
