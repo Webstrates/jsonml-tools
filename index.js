@@ -12,7 +12,7 @@
    See the License for the specific language governing permissions and
    limitations under the License.
 */
-       
+
 exports.toXML = function(obj, selfclose) {
     if (typeof obj === 'string') return obj;
     var tagName = obj[0];
@@ -30,8 +30,11 @@ exports.toXML = function(obj, selfclose) {
             if (attrs.hasOwnProperty(property)) {
                 attrStr += " ";
                 attrStr += property;
-                attrStr += "=";
-                attrStr += '"' + attrs[property].toString() + '"';
+                // The attribute may exist, but not have a value.
+                if (attrs[property]) {
+                  attrStr += "=";
+                  attrStr += '"' + attrs[property].toString() + '"';
+                }
             }
         }
         childIndex++;
@@ -45,6 +48,6 @@ exports.toXML = function(obj, selfclose) {
         return "<" + tagName + attrStr + "/>"
     }
     return "<" + tagName + attrStr + ">" + childXML + "</" + tagName + ">";
-    
+
 
 }
