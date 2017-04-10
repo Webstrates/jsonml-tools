@@ -15,7 +15,7 @@
 
 exports.toXML = function(obj, selfclose) {
   if (typeof obj === 'string') {
-    return obj.replace(/&/g, '&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return obj.replace(/</g,'&lt;').replace(/>/g,'&gt;');
   }
 
   var tagName = obj[0];
@@ -40,7 +40,7 @@ exports.toXML = function(obj, selfclose) {
         // The attribute may exist, but not have a value.
         if (attrs[property]) {
           attrStr += "=";
-          attrStr += '"' + attrs[property].toString() + '"';
+          attrStr += '"' + attrs[property].toString().replace(/\"/g, "&quot;") + '"';
         }
       }
     }
