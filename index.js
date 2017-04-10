@@ -14,40 +14,52 @@
 */
 
 exports.toXML = function(obj, selfclose) {
-    if (typeof obj === 'string') return obj;
-    var tagName = obj[0];
-    if (typeof tagName !== 'string') throw Error("Invalid JsonML");
-    if (tagName === "!" || tagName === "#comment") {
-      var textOffset = typeof obj[1] === "object" ? 2 : 1;
-      var text = obj.slice(textOffset).join('');
-      return "<!--" + text + "-->";
-    }
-    var attrStr = "";
-    var childIndex = 1;
-    if (obj.length > 1 && typeof obj[1] !== 'string' && !Array.isArray(obj[1])) {
-        var attrs = obj[1];
-        for (var property in attrs) {
-            if (attrs.hasOwnProperty(property)) {
-                attrStr += " ";
-                attrStr += property;
-                // The attribute may exist, but not have a value.
-                if (attrs[property]) {
-                  attrStr += "=";
-                  attrStr += '"' + attrs[property].toString() + '"';
-                }
-            }
+  if (typeof obj === 'string') {
+    return obj.replace(/&/g, '&amp;').replace(/</g,'&lt;').replace(/>/g,'&gt;');
+  }
+
+  var tagName = obj[0];
+  if (typeof tagName !== 'string') {
+    throw Error("Invalid JsonML");
+  }
+
+  if (tagName === "!" || tagName === "#comment") {
+    var textOffset = typeof obj[1] === "object" ? 2 : 1;
+    var text = obj.slice(textOffset).join('');
+    return "<!--" + text + "-->";
+  }
+
+  var attrStr = "";
+  var childIndex = 1;
+  if (obj.length > 1 && typeof obj[1] !== 'string' && !Array.isArray(obj[1])) {
+    var attrs = obj[1];
+    for (var property in attrs) {
+      if (attrs.hasOwnProperty(property)) {
+        attrStr += " ";
+        attrStr += property;
+        // The attribute may exist, but not have a value.
+        if (attrs[property]) {
+          attrStr += "=";
+          attrStr += '"' + attrs[property].toString() + '"';
         }
-        childIndex++;
+      }
     }
-    var children = obj.slice(childIndex, obj.length);
-    var childXML = ""
-    for (var i = 0; i<children.length; i++) {
-        childXML += this.toXML(children[i], selfclose);
-    }
-    if (children.length === 0 && (selfclose === undefined || selfclose.map(function (x) {return x.toLowerCase()}).indexOf(tagName.toLowerCase()) !== -1)) {
-        return "<" + tagName + attrStr + "/>"
-    }
-    return "<" + tagName + attrStr + ">" + childXML + "</" + tagName + ">";
+    childIndex++;
+  }
 
+  var children = obj.slice(childIndex, obj.length);
+  var childXML = ""
+  for (var i = 0; i<children.length; i++) {
+    childXML += this.toXML(children[i], selfclose);
+  }
 
+  selfclose = (selfclose === undefined) || (selfclose.map(function (x) {
+    return x.toLowerCase()
+  }).indexOf(tagName.toLowerCase()) !== -1);
+
+  if (children.length === 0 && selfclose) {
+    return "<" + tagName + attrStr + "/>"
+  }
+
+  return "<" + tagName + attrStr + ">" + childXML + "</" + tagName + ">";
 }
