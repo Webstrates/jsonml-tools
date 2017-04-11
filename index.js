@@ -15,7 +15,7 @@
 
 exports.toXML = function(obj, selfclose) {
   if (typeof obj === 'string') {
-    return obj.replace(/</g,'&lt;').replace(/>/g,'&gt;');
+    return obj.replace(/</g,'&lt;');
   }
 
   var tagName = obj[0];
