@@ -1,6 +1,6 @@
 {
   "name": "jsonml-tools",
-  "version": "0.0.3",
+  "version": "0.0.4",
   "description": "A simple JsonML library for node.js",
   "main": "index.js",
   "repository": {

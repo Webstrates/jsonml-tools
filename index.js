@@ -13,27 +13,27 @@
    limitations under the License.
 */
 
-exports.toXML = function(obj, selfclose) {
+exports.toXML = function(obj, selfclose, replaceLessThanSigns = true) {
   if (typeof obj === 'string') {
-    return obj.replace(/</g,'&lt;');
+    return replaceLessThanSigns ? obj.replace(/</g,'&lt;') : obj;
   }
 
-  var tagName = obj[0];
+  const tagName = obj[0];
   if (typeof tagName !== 'string') {
     throw Error("Invalid JsonML");
   }
 
   if (tagName === "!" || tagName === "#comment") {
-    var textOffset = typeof obj[1] === "object" ? 2 : 1;
-    var text = obj.slice(textOffset).join('');
+    const textOffset = typeof obj[1] === "object" ? 2 : 1;
+    const text = obj.slice(textOffset).join('');
     return "<!--" + text + "-->";
   }
 
-  var attrStr = "";
-  var childIndex = 1;
+  let attrStr = "";
+  let childIndex = 1;
   if (obj.length > 1 && typeof obj[1] !== 'string' && !Array.isArray(obj[1])) {
-    var attrs = obj[1];
-    for (var property in attrs) {
+    const attrs = obj[1];
+    for (let property in attrs) {
       if (attrs.hasOwnProperty(property)) {
         attrStr += " ";
         attrStr += property;
@@ -47,10 +47,12 @@ exports.toXML = function(obj, selfclose) {
     childIndex++;
   }
 
-  var children = obj.slice(childIndex, obj.length);
-  var childXML = ""
-  for (var i = 0; i<children.length; i++) {
-    childXML += this.toXML(children[i], selfclose);
+  const children = obj.slice(childIndex, obj.length);
+  let childXML = ""
+  // Don't replace < with &lt; in scripts or styles.
+  replaceLessThanSigns = !['script', 'style'].includes(obj[0].toLowerCase());
+  for (let i = 0; i<children.length; i++) {
+    childXML += this.toXML(children[i], selfclose, replaceLessThanSigns);
   }
 
   selfclose = (selfclose === undefined) || (selfclose.map(function (x) {
