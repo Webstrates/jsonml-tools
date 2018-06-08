@@ -14,6 +14,10 @@
 */
 
 exports.toXML = function(obj, selfclose, replaceLessThanSigns = true) {
+  if (!obj || !obj.length) {
+    return '';
+  }
+
   if (typeof obj === 'string') {
     return replaceLessThanSigns ? obj.replace(/</g,'&lt;') : obj;
   }
